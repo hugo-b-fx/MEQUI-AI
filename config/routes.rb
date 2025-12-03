@@ -1,21 +1,35 @@
 Rails.application.routes.draw do
-  get 'chats/index'
-  get 'chats/show'
-  get 'chats/create_message'
   devise_for :users
+<<<<<<< Updated upstream
+
   root to: "pages#home"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  resources :chats, only: [:index, :show, :create] do
+    post :create_message
+  end
 
   post "/quick_matching", to: "matches#quick_create"
+  get  "/my_matches", to: "matches#index"
+=======
+
+  root to: "pages#home"
+
+  # Matches existants (j'ai viré le doublon quick_matching)
   post "/quick_matching", to: "matches#quick_create"
   get "/my_matches", to: "matches#index"
+>>>>>>> Stashed changes
   post "/matching", to: "matches#create"
+
   resource :profile, only: [:edit, :update]
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+<<<<<<< Updated upstream
+=======
+  # Chat IA – un seul chat par user, messages nested
+  resource :chat, only: [:show] do
+    resources :messages, only: [:create]
+  end
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Health check
+>>>>>>> Stashed changes
+  get "up" => "rails/health#show", as: :rails_health_check
 end

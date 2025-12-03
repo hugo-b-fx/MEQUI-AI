@@ -1,10 +1,8 @@
 class ChatsController < ApplicationController
-  def index
-  end
+  before_action :authenticate_user!
 
   def show
-  end
-
-  def create_message
+    @chat = current_user.chat || current_user.create_chat!
+    @message = Message.new # pour le formulaire
   end
 end

@@ -45,12 +45,14 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "bootstrap", "~> 5.3"
+gem "dartsass-rails"                  # ← ajouté : moteur Sass moderne requis par Bootstrap 5.3
 gem "autoprefixer-rails"
-gem "font-awesome-sass", "~> 6.1"
+# gem "font-awesome-sass", "~> 6.1"    # ← obsolète avec dartsass, commenté proprement
 gem "simple_form", github: "heartcombo/simple_form"
-gem "sassc-rails"
+# gem "sassc-rails"                     # ← merde préhistorique, commenté (causait les crashes sur Apple Silicon)
+
 gem "devise"
-gem "ruby_llm"
+gem "ruby_llm"                        # ← gardé intégralement, c'est ton collègue qui l’a mis pour l’IA
 
 group :development, :test do
   gem "dotenv-rails"
