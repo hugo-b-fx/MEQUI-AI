@@ -1,54 +1,63 @@
 class MessagesController < ApplicationController
-  before_action :fake_login
-
-  # Fake current_user (temporaire tant qu’on n’a pas remis Devise)
-  def fake_login
-    @current_user = User.first
-  end
-
-  def current_user
-    @current_user
-  end
+  before_action :authenticate_user!
 
   def create
-    @chat = current_user.chat
+    @chat = current_user.chat || current_user.create_chat!
 
-    # 1. Message utilisateur
+    content = params.dig(:message, :content)&.strip
+    return head :unprocessable_entity if content.blank?
+
     user_message = @chat.messages.create!(
-      content: params[:message][:content],
+      content: content,
       role: "user",
       user: current_user
     )
 
-    # 2. Historique pour le modèle IA
-    messages_for_llm = @chat.messages.order(:created_at).map do |m|
+    messages_for_llm = @chat.messages.order(:created_at).last(15).map do |m|
       { role: m.role, content: m.content }
     end
 
     system_prompt = <<~PROMPT
-      Tu es MequiA, l'assistant IA ultra-sympa et expert équestre de m’equi.
-      Tu aides les cavaliers à trouver le coach parfait en posant des questions intelligentes.
-      Utilise des emojis 🐎✨.
+      Tu es MequiBotIA, l'assistant IA expert équestre de m’equi 🐎✨
+      Tu es chaleureux, tu tutoies, tu utilises des emojis.
+      Tu connais le profil de l'utilisateur :
+      • Nom : #{current_user.name}
+      • Niveau : #{current_user.level || "non renseigné"}
+      • Localisation : #{current_user.location || "non renseignée"}
+      • Objectif : #{current_user.objective || "non renseigné"}
+      • Cheval : #{current_user.horses.first&.name || "non indiqué"} (#{current_user.horses.first&.breed || ""})
+
+      Pose des questions intelligentes pour affiner le matching coach.
+      Quand tu as assez d’infos, propose les 3 meilleurs avec explication personnalisée.
+      Réponds toujours en français, sois fun, concis et motivant.
     PROMPT
 
     messages_for_llm.unshift({ role: "system", content: system_prompt })
 
-    # 3. Appel du modèle
-    response = RubyLLM.chat(
-      model: "gpt-4o-mini",
-      messages: messages_for_llm,
-      temperature: 0.7
-    )
+    begin
+      response = RubyLLM.chat(
+        model: "gpt-4o-mini",
+        messages: messages_for_llm,
+        temperature: 0.7
+      )
+      ai_content = response.dig("choices", 0, "message", "content")
+      ai_content ||= "Je réfléchis encore... 🐴 Peux-tu reformuler ?"
+    rescue StandardError => e
+      Rails.logger.error "RubyLLM error: #{e.message}"
+      ai_content = "Oups, je suis un peu distrait aujourd’hui 😅 Peux-tu répéter ta question ?"
+    end
 
-    # 4. Enregistrement message IA
-    @chat.messages.create!(
-      content: response.dig("choices", 0, "message", "content"),
-      role: "assistant"
-    )
+    @chat.messages.create!(content: ai_content, role: "assistant")
 
-    # 5. Turbo stream
     respond_to do |format|
       format.turbo_stream
+      format.html { redirect_to chat_path }
     end
+  end
+
+  private
+
+  def message_params
+    params.require(:message).permit(:content)
   end
 end
