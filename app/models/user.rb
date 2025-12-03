@@ -12,7 +12,7 @@ class User < ApplicationRecord
            dependent: :destroy
 
   has_many :horses, dependent: :destroy
-  has_many :chats, dependent: :destroy
+  has_one :chat, dependent: :destroy
   enum role: { rider: 0, coach: 1 }
   validates :name, presence: true
   validates :role, presence: true
