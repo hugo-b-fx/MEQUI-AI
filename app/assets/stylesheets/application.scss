@@ -10,3 +10,66 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+$primary: #8B5E3C;        // Marron chaud
+$secondary: #F5E3C1;      // Sable clair
+$accent: #C98E60;         // Cuivre / doré
+$text-color: #333333;
+$text-light: #FFF8F0;
+
+body {
+  background-color: $secondary;
+  color: $text-color;
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.6;
+}
+
+.navbar {
+  background-color: $primary !important;
+  .navbar-brand, .nav-link {
+    color: $text-light !important;
+    font-weight: 600;
+    &:hover {
+      color: $accent !important;
+    }
+  }
+}
+
+.container.text-center {
+  background-color: $text-light;
+  padding: 4rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  margin-top: 2rem;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  color: $primary;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: $text-color;
+}
+
+.btn-primary {
+  background-color: $primary;
+  border-color: $primary;
+  color: $text-light;
+  font-weight: 600;
+  &:hover {
+    background-color: $accent;
+    border-color: $accent;
+    color: $text-light;
+  }
+}
+
+@media (max-width: 768px) {
+  .container.text-center {
+    padding: 2rem 1rem;
+  }
+}
