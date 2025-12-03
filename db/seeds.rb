@@ -1,280 +1,270 @@
+# User (avec role string "rider" ou "coach") + Horse (belongs_to user)
+
 puts "Nettoyage de la base..."
 Horse.destroy_all
-Profile.destroy_all
 User.destroy_all
 
-puts "Création de 10 cavaliers + 10 coaches..."
+puts "Création de 10 cavaliers + 10 coaches + chevaux..."
 
 # ======================
-# 10 CAVALIERS
+# 10 CAVALIERS (role: "rider")
 # ======================
 
-cavalier1 = User.create!(email: "camille.dubois@gmail.com", password: "123456", first_name: "Camille", last_name: "Dubois")
-Profile.create!(
-  user: cavalier1,
-  kind: "rider",
+rider1 = User.create!(
+  email: "camille.dubois@gmail.com",
+  password: "123456",
+  name: "Camille Dubois",
+  role: "rider",
   level: "Galop 7",
-  disciplines: ["dressage", "saut_obstacle"],
   location: "Paris",
-  budget_cents: 150_000,
-  goals: "Préparer des concours nationaux en dressage, cheval expérimenté et sensible",
-  experience_years: 15
+  objective: "Préparer des concours nationaux en dressage, cheval expérimenté et sensible",
+  bio: "Passionnée depuis 15 ans, je cherche le coach parfait pour passer au niveau supérieur",
+  photos: ""
 )
-Horse.create!(profile: cavalier1.profile, name: "Quartz", age: 12, level: "Pro 1", breed: "Selle Français")
+Horse.create!(user: rider1, name: "Quartz", age: 12, breed: "Selle Français", level: "Pro 1")
 
-cavalier2 = User.create!(email: "leo.martin@gmail.com", password: "123456", first_name: "Léo", last_name: "Martin")
-Profile.create!(
-  user: cavalier2,
-  kind: "rider",
+rider2 = User.create!(
+  email: "leo.martin@gmail.com",
+  password: "123456",
+  name: "Léo Martin",
+  role: "rider",
   level: "Galop 5",
-  disciplines: ["saut_obstacle", "hunter"],
   location: "Lyon",
-  budget_cents: 90_000,
-  goals: "Progresser à l’obstacle, coach patient et motivant",
-  experience_years: 6
+  objective: "Progresser à l’obstacle, coach patient et motivant",
+  bio: "Reprise depuis 2 ans après une pause, besoin de confiance",
+  photos: ""
 )
-Horse.create!(profile: cavalier2.profile, name: "Rocket", age: 9, level: "Galop 5", breed: "Holsteiner")
+Horse.create!(user: rider2, name: "Rocket", age: 9, breed: "Holsteiner", level: "Galop 5")
 
-cavalier3 = User.create!(email: "emma.durand@gmail.com", password: "123456", first_name: "Emma", last_name: "Durand")
-Profile.create!(
-  user: cavalier3,
-  kind: "rider",
+rider3 = User.create!(
+  email: "emma.durand@gmail.com",
+  password: "123456",
+  name: "Emma Durand",
+  role: "rider",
   level: "Galop 6",
-  disciplines: ["concours_complet"],
   location: "Bordeaux",
-  budget_cents: 120_000,
-  goals: "Améliorer le cross, cheval courageux et endurant",
-  experience_years: 10
+  objective: "Améliorer le cross, cheval courageux et endurant",
+  bio: "Completiste passionnée, toujours partante pour l'aventure",
+  photos: ""
 )
-Horse.create!(profile: cavalier3.profile, name: "Tempête", age: 14, level: "Pro Élites", breed: "Anglo-Arabe")
+Horse.create!(user: rider3, name: "Tempête", age: 14, breed: "Anglo-Arabe", level: "Pro Élites")
 
-cavalier4 = User.create!(email: "lucas.moreau@gmail.com", password: "123456", first_name: "Lucas", last_name: "Moreau")
-Profile.create!(
-  user: cavalier4,
-  kind: "rider",
+rider4 = User.create!(
+  email: "lucas.moreau@gmail.com",
+  password: "123456",
+  name: "Lucas Moreau",
+  role: "rider",
   level: "Galop 4",
-  disciplines: ["western", "equifun"],
   location: "Marseille",
-  budget_cents: 70_000,
-  goals: "Découvrir le western, ambiance détendue et fun",
-  experience_years: 3
+  objective: "Découvrir le western, ambiance détendue et fun",
+  bio: "Nouveau dans le western, je veux prendre du plaisir avant tout",
+  photos: ""
 )
+Horse.create!(user: rider4, name: "Whiskey", age: 10, breed: "Quarter Horse", level: "Galop 4")
 
-Horse.create!(profile: cavalier4.profile, name: "Whiskey", age: 10, level: "Galop 4", breed: "Quarter Horse")
-
-cavalier5 = User.create!(email: "chloe.rousseau@gmail.com", password: "123456", first_name: "Chloé", last_name: "Rousseau")
-Profile.create!(
-  user: cavalier5,
-  kind: "rider",
+rider5 = User.create!(
+  email: "chloe.rousseau@gmail.com",
+  password: "123456",
+  name: "Chloé Rousseau",
+  role: "rider",
   level: "Galop 7",
-  disciplines: ["dressage"],
   location: "Toulouse",
-  budget_cents: 180_000,
-  goals: "Travailler la reprise Grand Prix, cheval très scolaire",
-  experience_years: 18
+  objective: "Travailler la reprise Grand Prix",
+  bio: "Niveau très avancé, perfectionniste et scolaire",
+  photos: ""
 )
-Horse.create!(profile: cavalier5.profile, name: "Valentino", age: 13, level: "Grand Prix", breed: "Lusitanien")
+Horse.create!(user: rider5, name: "Valentino", age: 13, breed: "Lusitanien", level: "Grand Prix")
 
-cavalier6 = User.create!(email: "theo.girard@gmail.com", password: "123456", first_name: "Théo", last_name: "Girard")
-Profile.create!(
-  user: cavalier6,
-  kind: "rider",
+rider6 = User.create!(
+  email: "theo.girard@gmail.com",
+  password: "123456",
+  name: "Théo Girard",
+  role: "rider",
   level: "Galop 3",
-  disciplines: ["saut_obstacle", "equifun"],
   location: "Nantes",
-  budget_cents: 60_000,
-  goals: "Prendre confiance aux barres, coach très pédagogue",
-  experience_years: 4
+  objective: "Prendre confiance aux barres",
+  bio: "Jeune cavalier timide qui adore les poneys",
+  photos: ""
 )
-Horse.create!(profile: cavalier6.profile, name: "Fuego", age: 8, level: "Galop 3", breed: "Connemara")
+Horse.create!(user: rider6, name: "Fuego", age: 8, breed: "Connemara", level: "Galop 3")
 
-cavalier7 = User.create!(email: "manon.petit@gmail.com", password: "123456", first_name: "Manon", last_name: "Petit")
-Profile.create!(
-  user: cavalier7,
-  kind: "rider",
+rider7 = User.create!(
+  email: "manon.petit@gmail.com",
+  password: "123456",
+  name: "Manon Petit",
+  role: "rider",
   level: "Galop 6",
-  disciplines: ["hunter", "dressage"],
   location: "Lille",
-  budget_cents: 100_000,
-  goals: "Style et régularité en hunter",
-  experience_years: 9
+  objective: "Style et régularité en hunter",
+  bio: "Amatrice sérieuse, je veux briller en concours",
+  photos: ""
 )
-Horse.create!(profile: cavalier7.profile, name: "Harmony", age: 11, level: "Galop 6", breed: "KWPN")
+Horse.create!(user: rider7, name: "Harmony", age: 11, breed: "KWPN", level: "Galop 6")
 
-cavalier8 = User.create!(email: "hugo.blanc@gmail.com", password: "123456", first_name: "Hugo", last_name: "Blanc")
-Profile.create!(
-  user: cavalier8,
-  kind: "rider",
+rider8 = User.create!(
+  email: "hugo.blanc@gmail.com",
+  password: "123456",
+  name: "Hugo Blanc",
+  role: "rider",
   level: "Galop 5",
-  disciplines: ["concours_complet", "saut_obstacle"],
   location: "Strasbourg",
-  budget_cents: 85_000,
-  goals: "Progresser en complet, cheval polyvalent",
-  experience_years: 7
+  objective: "Progresser en complet, cheval polyvalent",
+  bio: "Motivé et prêt à tout pour progresser",
+  photos: ""
 )
-Horse.create!(profile: cavalier8.profile, name: "Storm", age: 10, level: "Amateur 1", breed: "Irish Sport Horse")
+Horse.create!(user: rider8, name: "Storm", age: 10, breed: "Irish Sport Horse", level: "Amateur 1")
 
-cavalier9 = User.create!(email: "julie.laurent@gmail.com", password: "123456", first_name: "Julie", last_name: "Laurent")
-Profile.create!(
-  user: cavalier9,
-  kind: "rider",
+rider9 = User.create!(
+  email: "julie.laurent@gmail.com",
+  password: "123456",
+  name: "Julie Laurent",
+  role: "rider",
   level: "Galop 7",
-  disciplines: ["dressage"],
   location: "Nice",
-  budget_cents: 200_000,
-  goals: "Préparer Saint-Georges / Inter I",
-  experience_years: 20
+  objective: "Préparer Saint-Georges / Inter I",
+  bio: "Cavalière confirmée, objectif Grand Prix",
+  photos: ""
 )
-Horse.create!(profile: cavalier9.profile, name: "Don Juan", age: 15, level: "Grand Prix", breed: "Hanoverien")
+Horse.create!(user: rider9, name: "Don Juan", age: 15, breed: "Hanoverien", level: "Grand Prix")
 
-cavalier10 = User.create!(email: "antoine.robert@gmail.com", password: "123456", first_name: "Antoine", last_name: "Robert")
-Profile.create!(
-  user: cavalier10,
-  kind: "rider",
+rider10 = User.create!(
+  email: "antoine.robert@gmail.com",
+  password: "123456",
+  name: "Antoine Robert",
+  role: "rider",
   level: "Galop 4",
-  disciplines: ["equifun", "saut_obstacle"],
   location: "Rennes",
-  budget_cents: 75_000,
-  goals: "S’amuser, progresser sans pression",
-  experience_years: 5
+  objective: "S’amuser, progresser sans pression",
+  bio: "Loisir pur plaisir, balades et petits concours",
+  photos: ""
 )
-Horse.create!(profile: cavalier10.profile, name: "Pépito", age: 12, level: "Galop 4", breed: "Poney Français de Selle")
+Horse.create!(user: rider10, name: "Pépito", age: 12, breed: "Poney Français de Selle", level: "Galop 4")
 
 # ======================
-# 10 COACHS
+# 10 COACHS (role: "coach")
 # ======================
 
-coach1 = User.create!(email: "sophie.leroy@gmail.com", password: "123456", first_name: "Sophie", last_name: "Leroy")
-Profile.create!(
-  user: coach1,
-  kind: "coach",
-  level: "DEJEPS",
-  disciplines: ["dressage", "saut_obstacle"],
+coach1 = User.create!(
+  email: "sophie.leroy@gmail.com",
+  password: "123456",
+  name: "Sophie Leroy",
+  role: "coach",
+  price_per_hour: 100,
+  specialities: "dressage,saut_obstacle",
   location: "Paris",
-  teaching_style: "Pédagogie positive, valorisation du couple, travail en douceur",
-  price_range: "90-140€/h",
-  experience_years: 20,
-  availability: ["lundi", "mercredi", "vendredi", "samedi"]
+  bio: "20 ans d’expérience, pédagogie positive, valorisation du couple",
+  photos: ""
 )
 
-coach2 = User.create!(email: "thomas.bernard@gmail.com", password: "123456", first_name: "Thomas", last_name: "Bernard")
-Profile.create!(
-  user: coach2,
-  kind: "coach",
-  level: "BPJEPS",
-  disciplines: ["saut_obstacle", "hunter"],
+coach2 = User.create!(
+  email: "thomas.bernard@gmail.com",
+  password: "123456",
+  name: "Thomas Bernard",
+  role: "coach",
+  price_per_hour: 90,
+  specialities: "saut_obstacle,hunter",
   location: "Lyon",
-  teaching_style: "Technique, résultats rapides, ambiance pro",
-  price_range: "70-110€/h",
-  experience_years: 12,
-  availability: ["mardi", "jeudi", "samedi"]
+  bio: "Technique, résultats rapides, ambiance pro",
+  photos: ""
 )
 
-coach3 = User.create!(email: "marine.dupont@gmail.com", password: "123456", first_name: "Marine", last_name: "Dupont")
-Profile.create!(
-  user: coach3,
-  kind: "coach",
-  level: "BEES 2",
-  disciplines: ["concours_complet"],
+coach3 = User.create!(
+  email: "marine.dupont@gmail.com",
+  password: "123456",
+  name: "Marine Dupont",
+  role: "coach",
+  price_per_hour: 95,
+  specialities: "concours_complet",
   location: "Bordeaux",
-  teaching_style: "Spécialiste cross, sécurité, préparation mentale",
-  price_range: "80-120€/h",
-  experience_years: 18,
-  availability: ["lundi", "jeudi", "vendredi"]
+  bio: "Spécialiste cross, sécurité et préparation mentale",
+  photos: ""
 )
 
-coach4 = User.create!(email: "julien.roche@gmail.com", password: "123456", first_name: "Julien", last_name: "Roche")
-Profile.create!(
-  user: coach4,
-  kind: "coach",
-  level: "DEJEPS",
-  disciplines: ["western", "reining"],
+coach4 = User.create!(
+  email: "julien.roche@gmail.com",
+  password: "123456",
+  name: "Julien Roche",
+  role: "coach",
+  price_per_hour: 85,
+  specialities: "western,reining",
   location: "Marseille",
-  teaching_style: "Américain décontracté, précision et légèreté",
-  price_range: "75-100€/h",
-  experience_years: 15,
-  availability: ["mercredi", "vendredi", "week-end"]
+  bio: "Style américain, légèreté et précision",
+  photos: ""
 )
 
-coach5 = User.create!(email: "aude.martin@gmail.com", password: "123456", first_name: "Aude", last_name: "Martin")
-Profile.create!(
-  user: coach5,
-  kind: "coach",
-  level: "BPJEPS",
-  disciplines: ["dressage", "equitation éthologique"],
+coach5 = User.create!(
+  email: "aude.martin@gmail.com",
+  password: "123456",
+  name: "Aude Martin",
+  role: "coach",
+  price_per_hour: 80,
+  specialities: "dressage,éthologique",
   location: "Toulouse",
-  teaching_style: "Éthologique, connexion cheval/cavalier, sans force",
-  price_range: "65-95€/h",
-  experience_years: 10,
-  availability: ["lundi", "mardi", "jeudi"]
+  bio: "Éthologique, connexion sans force",
+  photos: ""
 )
 
-coach6 = User.create!(email: "nicolas.garcia@gmail.com", password: "123456", first_name: "Nicolas", last_name: "Garcia")
-Profile.create!(
-  user: coach6,
-  kind: "coach",
-  level: "DEJEPS",
-  disciplines: ["saut_obstacle", "hunter"],
+coach6 = User.create!(
+  email: "nicolas.garcia@gmail.com",
+  password: "123456",
+  name: "Nicolas Garcia",
+  role: "coach",
+  price_per_hour: 110,
+  specialities: "saut_obstacle,hunter",
   location: "Nantes",
-  teaching_style: "Technique pointue, préparation concours, exigence bienveillante",
-  price_range: "85-130€/h",
-  experience_years: 22,
-  availability: ["mardi", "mercredi", "samedi"]
+  bio: "Exigence bienveillante, préparation concours",
+  photos: ""
 )
 
-coach7 = User.create!(email: "celine.robert@gmail.com", password: "123456", first_name: "Céline", last_name: "Robert")
-Profile.create!(
-  user: coach7,
-  kind: "coach",
-  level: "BEES 2",
-  disciplines: ["hunter", "equifun"],
+coach7 = User.create!(
+  email: "celine.robert@gmail.com",
+  password: "123456",
+  name: "Céline Robert",
+  role: "coach",
+  price_per_hour: 75,
+  specialities: "hunter,equifun",
   location: "Lille",
-  teaching_style: "Fun, ludique, progression rapide pour enfants & adultes",
-  price_range: "60-90€/h",
-  experience_years: 14,
-  availability: ["lundi", "jeudi", "samedi"]
+  bio: "Fun, ludique, progression rapide pour tous âges",
+  photos: ""
 )
 
-coach8 = User.create!(email: "vincent.leroux@gmail.com", password: "123456", first_name: "Vincent", last_name: "Leroux")
-Profile.create!(
-  user: coach8,
-  kind: "coach",
-  level: "BPJEPS",
-  disciplines: ["concours_complet", "saut_obstacle"],
+coach8 = User.create!(
+  email: "vincent.leroux@gmail.com",
+  password: "123456",
+  name: "Vincent Leroux",
+  role: "coach",
+  price_per_hour: 100,
+  specialities: "concours_complet",
   location: "Strasbourg",
-  teaching_style: "Cross & obstacle, mental d’acier, sécurité avant tout",
-  price_range: "80-115€/h",
-  experience_years: 16,
-  availability: ["mercredi", "vendredi", "dimanche"]
+  bio: "Mental d’acier, sécurité avant tout",
+  photos: ""
 )
 
-coach9 = User.create!(email: "elodie.fournier@gmail.com", password: "123456", first_name: "Élodie", last_name: "Fournier")
-Profile.create!(
-  user: coach9,
-  kind: "coach",
-  level: "DEJEPS Dressage",
-  disciplines: ["dressage"],
+coach9 = User.create!(
+  email: "elodie.fournier@gmail.com",
+  password: "123456",
+  name: "Élodie Fournier",
+  role: "coach",
+  price_per_hour: 130,
+  specialities: "dressage",
   location: "Nice",
-  teaching_style: "Classique français, précision, élégance, reprises parfaites",
-  price_range: "100-150€/h",
-  experience_years: 25,
-  availability: ["lundi", "mardi", "vendredi"]
+  bio: "Classique français, précision et élégance",
+  photos: ""
 )
 
-coach10 = User.create!(email: "remi.david@gmail.com", password: "123456", first_name: "Rémi", last_name: "David")
-Profile.create!(
-  user: coach10,
-  kind: "coach",
-  level: "BPJEPS",
-  disciplines: ["equifun", "western", "balades"],
+coach10 = User.create!(
+  email: "remi.david@gmail.com",
+  password: "123456",
+  name: "Rémi David",
+  role: "coach",
+  price_per_hour: 70,
+  specialities: "equifun,balades",
   location: "Rennes",
-  teaching_style: "Détente, balades, plaisir avant tout",
-  price_range: "55-85€/h",
-  experience_years: 11,
-  availability: ["mercredi", "samedi", "dimanche"]
+  bio: "Plaisir avant tout, balades et détente",
+  photos: ""
 )
 
-puts "Seed terminée ! #{User.count} utilisateurs créés (10 cavaliers + 10 coaches) avec profils & chevaux."
-puts "Tu peux maintenant tester le matching IA en toute tranquillité !"
+puts "Seed terminée ! #{User.count} utilisateurs créés (10 cavaliers + 10 coaches) + 10 chevaux."
+puts "Tout est prêt pour tester le matching IA !"
 
 # Lancement : rails db:seed
