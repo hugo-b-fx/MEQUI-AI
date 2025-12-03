@@ -1,9 +1,8 @@
 class ChatsController < ApplicationController
-  # ATTENTION : ONLY FOR DEV
-  # Supprimer authenticate_user! pour l'instant
+  # IMPORTANT : on ne veut PAS de login Devise pour l'instant
   # before_action :authenticate_user!
 
-  before_action :fake_login_dev
+  before_action :fake_login
 
   def show
     @chat = current_user.chat || current_user.create_chat!
@@ -21,7 +20,10 @@ class ChatsController < ApplicationController
 
   private
 
-  def fake_login_dev
+  # --------------------------
+  # TEMPORARY DEV LOGIN (Heroku included)
+  # --------------------------
+  def fake_login
     @current_user = User.first
   end
 
