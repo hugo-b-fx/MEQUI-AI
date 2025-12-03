@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  before_action :ensure_user
+  before_action :load_or_create_user
 
   def show
     @chat = current_user.chat || current_user.create_chat!
@@ -17,20 +17,15 @@ class ChatsController < ApplicationController
 
   private
 
-  def ensure_user
+  def load_or_create_user
     return if current_user.present?
 
-    temp_user = User.find_by(email: "dev@example.com")
-
-    unless temp_user
-      temp_user = User.create!(
-        email: "dev@example.com",
-        password: "password123",
-        name: "Dev User",
-        role: :rider
-      )
+    temp_user = User.find_or_create_by!(email: "dev@example.com") do |u|
+      u.password = "password123"
+      u.name     = "Dev User"
+      u.role     = :rider
     end
 
-    sign_in(temp_user)
+    sign_in(:user, temp_user)
   end
 end
