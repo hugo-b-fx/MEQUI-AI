@@ -1,6 +1,4 @@
 class ChatsController < ApplicationController
-  # IMPORTANT : on ne veut PAS de login Devise pour l'instant
-  # before_action :authenticate_user!
 
   before_action :fake_login
 

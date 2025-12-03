@@ -5,9 +5,9 @@
     <%= render partial: "messages/message", collection: @messages %>
   </div>
 
-  <%= simple_form_for [@chat, @message], url: chat_messages_path(@chat), data: { turbo: true } do |f| %>
+  <%= simple_form_for [@chat, @message], url: chat_messages_path, method: :post, data: { turbo: true } do |f| %>
     <%= f.input :content, label: false, placeholder: "Pose ta question ou dis-moi ce que tu cherches...", input_html: { class: "w-100" } %>
-    <%= f.submit "Envoyer", class: "btn btn-primary" %>
+    <%= f.submit "Envoyer", class: "btn btn-primary mt-2" %>
   <% end %>
 </div>
 
