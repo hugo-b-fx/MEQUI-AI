@@ -2,7 +2,7 @@
   <h1 class="text-center mb-4">MequiBot IA 🐎</h1>
 
   <div id="messages" class="mb-4" style="height: 70vh; overflow-y: auto;">
-    <%= render @chat.messages %>
+    <%= render partial: "messages/message", collection: @messages %>
   </div>
 
   <%= simple_form_for [@chat, @message], url: chat_messages_path(@chat), data: { turbo: true } do |f| %>
