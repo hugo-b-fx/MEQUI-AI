@@ -1,5 +1,9 @@
 class ChatsController < ApplicationController
-  before_action :load_or_create_user
+  # ATTENTION : ONLY FOR DEV
+  # Supprimer authenticate_user! pour l'instant
+  # before_action :authenticate_user!
+
+  before_action :fake_login_dev
 
   def show
     @chat = current_user.chat || current_user.create_chat!
@@ -17,15 +21,11 @@ class ChatsController < ApplicationController
 
   private
 
-  def load_or_create_user
-    return if current_user.present?
+  def fake_login_dev
+    @current_user = User.first
+  end
 
-    temp_user = User.find_or_create_by!(email: "dev@example.com") do |u|
-      u.password = "password123"
-      u.name     = "Dev User"
-      u.role     = :rider
-    end
-
-    sign_in(:user, temp_user)
+  def current_user
+    @current_user
   end
 end
