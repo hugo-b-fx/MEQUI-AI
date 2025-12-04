@@ -7,17 +7,14 @@ class MessagesController < ApplicationController
     content = params.dig(:message, :content)&.strip
     return head :unprocessable_entity if content.blank?
 
-    # On enregistre le message utilisateur
     user_message = @chat.messages.create!(
       content: content,
       role: "user",
-      user: current_user
+      #user: current_user
     )
 
-    # On récupère les derniers messages (limiter pour un meilleur prompt)
     messages_for_llm = @chat.messages.order(:created_at).last(10)
 
-    # System prompt
     system_prompt = <<~PROMPT
       Tu es MequiBotIA, l'assistant IA expert équestre de m’equi 🐎✨.
       Tu es chaleureux, tu tutoies, tu utilises des emojis.
@@ -25,7 +22,6 @@ class MessagesController < ApplicationController
       Réponds toujours en français.
     PROMPT
 
-    # Reconstruction en texte (compatible RubyLLM 1.2)
     conversation_text = messages_for_llm.map do |m|
       prefix = m.role == "assistant" ? "Assistant" : "User"
       "#{prefix}: #{m.content}"
@@ -33,9 +29,6 @@ class MessagesController < ApplicationController
 
     final_prompt = "#{system_prompt}\n\n#{conversation_text}\nAssistant:"
 
-    # =======================
-    #     APPEL IA RUBYLLM
-    # =======================
     begin
       chat = RubyLLM.chat
       response = chat.ask(final_prompt)
@@ -45,7 +38,6 @@ class MessagesController < ApplicationController
       ai_content = "Oups 😅 Je n'ai pas compris. Peux-tu reformuler ?"
     end
 
-    # Enregistrement du message assistant
     @chat.messages.create!(
       content: ai_content,
       role: "assistant"
