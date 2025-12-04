@@ -1,14 +1,6 @@
+# app/controllers/messages_controller.rb
 class MessagesController < ApplicationController
-  before_action :fake_login
-
-  # Fake current_user tant que Devise n’est pas actif
-  def fake_login
-    @current_user = User.first
-  end
-
-  def current_user
-    @current_user
-  end
+  before_action :authenticate_user!
 
   def create
     @chat = current_user.chat || current_user.create_chat!
@@ -22,7 +14,6 @@ class MessagesController < ApplicationController
       user: current_user
     )
 
-    # Historique limité aux 15 derniers messages
     messages_for_llm = @chat.messages.order(:created_at).last(15).map do |m|
       { role: m.role, content: m.content }
     end
@@ -38,7 +29,7 @@ class MessagesController < ApplicationController
       • Cheval : #{current_user.horses.first&.name || "non indiqué"} (#{current_user.horses.first&.breed || ""})
 
       Pose des questions intelligentes pour affiner le matching coach.
-      Quand tu as assez d’infos, propose les 3 meilleurs coaches avec explication personnalisée.
+      Quand tu as assez d’infos, propose les 3 meilleurs avec explication personnalisée.
       Réponds toujours en français, sois fun, concis et motivant.
     PROMPT
 
@@ -50,19 +41,14 @@ class MessagesController < ApplicationController
         messages: messages_for_llm,
         temperature: 0.7
       )
-
       ai_content = response.dig("choices", 0, "message", "content")
-      ai_content ||= "Je n’ai pas bien compris, peux-tu reformuler ? 😅"
-
+      ai_content ||= "Je réfléchis encore... 🐴 Peux-tu reformuler ?"
     rescue StandardError => e
-      Rails.logger.error "Erreur RubyLLM : #{e.message}"
+      Rails.logger.error "RubyLLM error: #{e.message}"
       ai_content = "Oups, je suis un peu distrait aujourd’hui 😅 Peux-tu répéter ta question ?"
     end
 
-    @chat.messages.create!(
-      content: ai_content,
-      role: "assistant"
-    )
+    @chat.messages.create!(content: ai_content, role: "assistant")
 
     respond_to do |format|
       format.turbo_stream
