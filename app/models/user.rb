@@ -13,13 +13,13 @@ class User < ApplicationRecord
 
   has_many :horses, dependent: :destroy
   has_one :chat, dependent: :destroy
-  enum role: { rider: 0, coach: 1 }
+  enum role: { rider: "rider", coach: "coach" }
   validates :name, presence: true
   validates :role, presence: true
   with_options if: :coach? do
     validates :specialities, presence: true
     validates :price_per_hour, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-    validates :level, presence: true
+    #validates :level, presence: true
   end
 
   def coach_profile

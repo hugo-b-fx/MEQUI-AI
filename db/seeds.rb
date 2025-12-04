@@ -21,7 +21,7 @@ rider1 = User.create!(
   bio: "Passionnée depuis 15 ans, je cherche le coach parfait pour passer au niveau supérieur",
   photos: ""
 )
-Horse.create!(user: rider1, name: "Quartz", age: 12, breed: "Selle Français", level: "Pro 1")
+#Horse.create!(user: rider1, name: "Quartz", age: 12, breed: "Selle Français", level: "Pro 1")
 
 rider2 = User.create!(
   email: "leo.martin@gmail.com",
@@ -34,7 +34,7 @@ rider2 = User.create!(
   bio: "Reprise depuis 2 ans après une pause, besoin de confiance",
   photos: ""
 )
-Horse.create!(user: rider2, name: "Rocket", age: 9, breed: "Holsteiner", level: "Galop 5")
+#Horse.create!(user: rider2, name: "Rocket", age: 9, breed: "Holsteiner", level: "Galop 5")
 
 rider3 = User.create!(
   email: "emma.durand@gmail.com",
@@ -47,7 +47,7 @@ rider3 = User.create!(
   bio: "Completiste passionnée, toujours partante pour l'aventure",
   photos: ""
 )
-Horse.create!(user: rider3, name: "Tempête", age: 14, breed: "Anglo-Arabe", level: "Pro Élites")
+#Horse.create!(user: rider3, name: "Tempête", age: 14, breed: "Anglo-Arabe", level: "Pro Élites")
 
 rider4 = User.create!(
   email: "lucas.moreau@gmail.com",
@@ -60,7 +60,7 @@ rider4 = User.create!(
   bio: "Nouveau dans le western, je veux prendre du plaisir avant tout",
   photos: ""
 )
-Horse.create!(user: rider4, name: "Whiskey", age: 10, breed: "Quarter Horse", level: "Galop 4")
+#Horse.create!(user: rider4, name: "Whiskey", age: 10, breed: "Quarter Horse", level: "Galop 4")
 
 rider5 = User.create!(
   email: "chloe.rousseau@gmail.com",
@@ -73,7 +73,7 @@ rider5 = User.create!(
   bio: "Niveau très avancé, perfectionniste et scolaire",
   photos: ""
 )
-Horse.create!(user: rider5, name: "Valentino", age: 13, breed: "Lusitanien", level: "Grand Prix")
+#Horse.create!(user: rider5, name: "Valentino", age: 13, breed: "Lusitanien", level: "Grand Prix")
 
 rider6 = User.create!(
   email: "theo.girard@gmail.com",
@@ -86,7 +86,7 @@ rider6 = User.create!(
   bio: "Jeune cavalier timide qui adore les poneys",
   photos: ""
 )
-Horse.create!(user: rider6, name: "Fuego", age: 8, breed: "Connemara", level: "Galop 3")
+#Horse.create!(user: rider6, name: "Fuego", age: 8, breed: "Connemara", level: "Galop 3")
 
 rider7 = User.create!(
   email: "manon.petit@gmail.com",
@@ -99,7 +99,7 @@ rider7 = User.create!(
   bio: "Amatrice sérieuse, je veux briller en concours",
   photos: ""
 )
-Horse.create!(user: rider7, name: "Harmony", age: 11, breed: "KWPN", level: "Galop 6")
+#Horse.create!(user: rider7, name: "Harmony", age: 11, breed: "KWPN", level: "Galop 6")
 
 rider8 = User.create!(
   email: "hugo.blanc@gmail.com",
@@ -112,7 +112,7 @@ rider8 = User.create!(
   bio: "Motivé et prêt à tout pour progresser",
   photos: ""
 )
-Horse.create!(user: rider8, name: "Storm", age: 10, breed: "Irish Sport Horse", level: "Amateur 1")
+#Horse.create!(user: rider8, name: "Storm", age: 10, breed: "Irish Sport Horse", level: "Amateur 1")
 
 rider9 = User.create!(
   email: "julie.laurent@gmail.com",
@@ -125,7 +125,7 @@ rider9 = User.create!(
   bio: "Cavalière confirmée, objectif Grand Prix",
   photos: ""
 )
-Horse.create!(user: rider9, name: "Don Juan", age: 15, breed: "Hanoverien", level: "Grand Prix")
+#Horse.create!(user: rider9, name: "Don Juan", age: 15, breed: "Hanoverien", level: "Grand Prix")
 
 rider10 = User.create!(
   email: "antoine.robert@gmail.com",
@@ -138,7 +138,7 @@ rider10 = User.create!(
   bio: "Loisir pur plaisir, balades et petits concours",
   photos: ""
 )
-Horse.create!(user: rider10, name: "Pépito", age: 12, breed: "Poney Français de Selle", level: "Galop 4")
+#Horse.create!(user: rider10, name: "Pépito", age: 12, breed: "Poney Français de Selle", level: "Galop 4")
 
 # ======================
 # 10 COACHS (role: "coach")
