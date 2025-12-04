@@ -1,7 +1,6 @@
 class MessagesController < ApplicationController
   before_action :fake_login
 
-  # Fake current_user (temporaire tant qu’on n’a pas remis Devise)
   def fake_login
     @current_user = User.first
   end
@@ -13,14 +12,12 @@ class MessagesController < ApplicationController
   def create
     @chat = current_user.chat
 
-    # 1. Message utilisateur
     user_message = @chat.messages.create!(
       content: params[:message][:content],
       role: "user",
       user: current_user
     )
 
-    # 2. Historique pour le modèle IA
     messages_for_llm = @chat.messages.order(:created_at).map do |m|
       { role: m.role, content: m.content }
     end
@@ -33,20 +30,36 @@ class MessagesController < ApplicationController
 
     messages_for_llm.unshift({ role: "system", content: system_prompt })
 
-    # 3. Appel du modèle
-    response = RubyLLM.chat(
-      model: "gpt-4o-mini",
-      messages: messages_for_llm,
-      temperature: 0.7
-    )
+    # =====================================================
+    #               APPEL IA AVEC GESTION D’ERREUR
+    # =====================================================
 
-    # 4. Enregistrement message IA
+    begin
+      response = RubyLLM.chat(
+        model: "gpt-4o-mini",
+        messages: messages_for_llm,
+        temperature: 0.7
+      )
+
+      Rails.logger.debug "LLM RAW RESPONSE: #{response.inspect}"
+
+      ai_text = response.dig("choices", 0, "message", "content")
+
+      # Si l’IA renvoie un format inattendu ou vide
+      if ai_text.blank?
+        ai_text = "Oups 😅 Je n’ai pas réussi à générer une réponse. Peux-tu reformuler ?"
+      end
+
+    rescue => e
+      Rails.logger.error "IA ERROR: #{e.class} - #{e.message}"
+      ai_text = "Une erreur s’est produite côté IA 😢 Réessaie dans un instant !"
+    end
+
     @chat.messages.create!(
-      content: response.dig("choices", 0, "message", "content"),
+      content: ai_text,
       role: "assistant"
     )
 
-    # 5. Turbo stream
     respond_to do |format|
       format.turbo_stream
     end

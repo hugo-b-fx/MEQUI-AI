@@ -52,7 +52,8 @@ gem "simple_form", github: "heartcombo/simple_form"
 # gem "sassc-rails"                     # ← merde préhistorique, commenté (causait les crashes sur Apple Silicon)
 
 gem "devise"
-gem "ruby_llm"                        # ← gardé intégralement, c'est ton collègue qui l’a mis pour l’IA
+gem "ruby_llm", "~> 1.2.0"
+# ← gardé intégralement, c'est ton collègue qui l’a mis pour l’IA
 
 group :development, :test do
   gem "dotenv-rails"
