@@ -1,10 +1,21 @@
-<div class="container text-center py-5">
-  <h1>Welcome</h1>
-  <p>The best coaches for the best riders.</p>
+<div class="home-hero">
+  <div class="container text-center py-5 home-hero-content">
+    <h1 class="home-hero-title">
+      Find the best coach for your horse 🐎
+    </h1>
 
-  <% if user_signed_in? %>
-    <%= link_to "Go to Dashboard", "#", class: "btn btn-primary mt-3" %>
-  <% else %>
-    <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary mt-3" %>
-  <% end %>
+    <p class="home-hero-subtitle">
+      The best coaches for the best riders.
+      Answer a few questions and let our AI match you with the perfect coach.
+    </p>
+
+    <div class="home-hero-actions mt-4">
+      <% if user_signed_in? %>
+        <%= link_to "Go to Dashboard", "#", class: "btn btn-primary btn-lg" %>
+      <% else %>
+        <%= link_to "Get started – it's free", new_user_registration_path, class: "btn btn-primary btn-lg" %>
+        <%= link_to "Log in", new_user_session_path, class: "btn btn-ghost" %>
+      <% end %>
+    </div>
+  </div>
 </div>
