@@ -1,5 +1,14 @@
 class MessagesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :fake_login
+
+  # Fake current_user tant que Devise n’est pas actif
+  def fake_login
+    @current_user = User.first
+  end
+
+  def current_user
+    @current_user
+  end
 
   def create
     @chat = current_user.chat || current_user.create_chat!
