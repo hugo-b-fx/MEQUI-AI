@@ -28,7 +28,11 @@ class MessagesController < ApplicationController
       • Cheval : #{current_user.horses.first&.name || "non indiqué"} (#{current_user.horses.first&.breed || ""})
 
       Pose des questions intelligentes pour affiner le matching coach.
+<<<<<<< HEAD
       Quand tu as assez d’infos, propose les 3 meilleurs avec explication personnalisée.
+=======
+      Quand tu as assez d’infos, propose les 3 meilleurs coaches avec explication personnalisée.
+>>>>>>> c2d3dae (fix: resolve merge conflicts)
       Réponds toujours en français, sois fun, concis et motivant.
     PROMPT
 
@@ -40,6 +44,7 @@ class MessagesController < ApplicationController
         messages: messages_for_llm,
         temperature: 0.7
       )
+<<<<<<< HEAD
       ai_content = response.dig("choices", 0, "message", "content")
       ai_content ||= "Je réfléchis encore... 🐴 Peux-tu reformuler ?"
     rescue StandardError => e
@@ -48,6 +53,20 @@ class MessagesController < ApplicationController
     end
 
     @chat.messages.create!(content: ai_content, role: "assistant")
+=======
+
+      ai_content = response.dig("choices", 0, "message", "content")
+      ai_content ||= "Je n’ai pas bien compris, peux-tu reformuler ? 😅"
+    rescue StandardError => e
+      Rails.logger.error "Erreur RubyLLM : #{e.message}"
+      ai_content = "Oups, je suis un peu distrait aujourd’hui 😅 Peux-tu répéter ta question ?"
+    end
+
+    @chat.messages.create!(
+      content: ai_content,
+      role: "assistant"
+    )
+>>>>>>> c2d3dae (fix: resolve merge conflicts)
 
     respond_to do |format|
       format.turbo_stream
