@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container py-5 min-vh-100 d-flex flex-column">
   <h1 class="text-center mb-5">MequiBot IA 🐎</h1>
 
@@ -10,6 +11,18 @@
       <%= f.input :content, label: false, placeholder: "Pose ta question à MequiBot...", input_html: { class: "form-control rounded-start", data: { action: "keydown->chat#sendOnEnter" } } %>
       <%= f.submit "Envoyer", class: "btn btn-primary rounded-end" %>
     </div>
+=======
+<div class="container py-5">
+  <h1 class="text-center mb-4">MequiBot IA 🐎</h1>
+
+  <div id="messages" class="mb-4" style="height: 70vh; overflow-y: auto;">
+    <%= render partial: "messages/message", collection: @messages %>
+  </div>
+
+  <%= simple_form_for [@chat, @message], url: chat_messages_path(@chat), data: { turbo: true } do |f| %>
+    <%= f.input :content, label: false, placeholder: "Pose ta question ou dis-moi ce que tu cherches...", input_html: { class: "w-100" } %>
+    <%= f.submit "Envoyer", class: "btn btn-primary" %>
+>>>>>>> master
   <% end %>
 </div>
 

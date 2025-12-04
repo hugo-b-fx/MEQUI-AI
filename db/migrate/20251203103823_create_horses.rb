@@ -6,7 +6,7 @@ class CreateHorses < ActiveRecord::Migration[7.1]
       t.string :breed
       t.integer :age
       t.string :discipline
-      t.text :photos
+      t.string :photos
 
       t.timestamps
     end
