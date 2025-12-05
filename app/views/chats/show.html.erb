@@ -22,8 +22,7 @@
   <div class="chat-input px-3 py-2">
     <%= simple_form_for [@chat, @message],
           url: chat_messages_path(@chat),
-          data: { turbo_stream: "true" },
-          html: { id: "new_message_form", class: "d-flex align-items-center w-100", data: { turbo: "true" } } do |f| %>
+          html: { id: "new_message_form", class: "d-flex align-items-center w-100" } do |f| %>
 
       <%= f.input :content,
             label: false,
