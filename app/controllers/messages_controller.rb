@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @chat = current_user.chat || current_user.create_chat!
+    @chat = Chat.find(params[:chat_id])
 
     content = params.dig(:message, :content)&.strip
     return head :unprocessable_entity if content.blank?
@@ -31,12 +31,10 @@ class MessagesController < ApplicationController
       Tu es chaleureux, tu tutoies, tu utilises des emojis.
       Pose des questions intelligentes pour affiner le matching coach.
       Réponds toujours en français.
-      Voici la liste des coachs disponibles dans la base :
+      Voici la liste des coachs disponibles :
       #{coaches_context}
-      Utilise exclusivement cette liste pour faire tes recommandations.
-      Si un coach ne correspond pas, explique pourquoi.
+      Utilise exclusivement cette liste pour tes recommandations.
       N'invente jamais de coachs.
-      Pose des questions pertinentes pour affiner le choix.
     PROMPT
 
     conversation_text = messages_for_llm.map do |m|
@@ -65,11 +63,5 @@ class MessagesController < ApplicationController
       format.turbo_stream
       format.html { redirect_to chat_path(@chat) }
     end
-  end
-
-  private
-
-  def message_params
-    params.require(:message).permit(:content)
   end
 end
