@@ -7,10 +7,9 @@ class MessagesController < ApplicationController
     content = params.dig(:message, :content)&.strip
     return head :unprocessable_entity if content.blank?
 
-    user_message = @chat.messages.create!(
+    @chat.messages.create!(
       content: content,
-      role: "user",
-      #user: current_user
+      role: "user"
     )
 
     coaches = User.where(role: "coach")
@@ -51,8 +50,7 @@ class MessagesController < ApplicationController
       chat = RubyLLM.chat
       response = chat.ask(final_prompt)
       ai_content = response.content
-    rescue => e
-      Rails.logger.error "RubyLLM error: #{e.message}"
+    rescue
       ai_content = "Oups 😅 Je n'ai pas compris. Peux-tu reformuler ?"
     end
 
@@ -61,9 +59,11 @@ class MessagesController < ApplicationController
       role: "assistant"
     )
 
+    @message = @chat.messages.last
+
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to chat_path }
+      format.html { redirect_to chat_path(@chat) }
     end
   end
 
