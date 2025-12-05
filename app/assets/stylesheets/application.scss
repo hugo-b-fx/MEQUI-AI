@@ -6,122 +6,174 @@
 @import "font-awesome";
 
 :root {
-  --sellier: #6B4F3A;     // Marron cuir sellier profond
-  --sable: #FAF5E9;       // Beige sable chaud
-  --or: #C9A87C;          // Or vieilli
-  --ombre: rgba(107, 79, 58, 0.15);
-  --texte: #3C2F2F;
+  --bg: #f4f4f5;
+  --input-bg: #f7f7f8;
+  --send-bg: #10a37f;
+  --send-hover: #0e906f;
+  --sellier: #6B4F3A;
+  --assistant-bg: #e5e7eb;
+  --ombre: rgba(0, 0, 0, 0.08);
+  --border-color: #d9d9e3;
 }
 
 body {
-  background: linear-gradient(to bottom, #FAF7F2 0%, #F5E3C1 100%);
-  color: var(--texte);
+  background: var(--bg);
+  color: #1a1a1a;
   font-family: 'Nunito', sans-serif;
   min-height: 100vh;
 }
 
-h1, .chat-title {
-  font-family: 'Playfair Display', serif;
-  color: var(--sellier);
-  letter-spacing: 3px;
-  text-shadow: 0 4px 15px var(--ombre);
-  font-weight: 700;
-}
-
-.navbar {
-  background: var(--sellier) !important;
-  box-shadow: 0 10px 40px var(--ombre);
-  .navbar-brand, .nav-link {
-    color: white !important;
-    font-weight: 600;
-    &:hover { color: var(--or) !important; }
-  }
-}
-
-// Chat IA – Luxe absolu
 .chat-container {
-  max-width: 950px;
-  margin: 3rem auto;
-  padding: 3rem;
-  min-height: 90vh;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 0;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .chat-title {
   text-align: center;
-  font-size: 5rem;
-  margin-bottom: 4rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 4.5rem;
+  color: var(--sellier);
+  margin: 2rem 0 3rem;
 }
 
 #messages {
   flex: 1;
   overflow-y: auto;
-  background: white;
-  border-radius: 36px;
-  padding: 3rem;
-  box-shadow: 0 30px 80px var(--ombre);
-  margin-bottom: 3rem;
+  padding: 1rem 0 2rem;
+  margin-bottom: 0;
 }
 
 .message {
-  margin-bottom: 3rem;
-  .p-3 {
-    border-radius: 36px;
-    max-width: 72%;
-    padding: 1.8rem 2.5rem;
-    box-shadow: 0 15px 40px var(--ombre);
-    position: relative;
-    border: 1px solid var(--or);
+  margin-bottom: 2rem;
+  display: flex;
+
+  &.assistant {
+    justify-content: flex-start;
   }
-  &.assistant .p-3 {
+
+  &.user {
+    justify-content: flex-end;
+  }
+
+  .p-3 {
+    max-width: 75%;
+    padding: 1.2rem 1.8rem;
+    border-radius: 20px;
+    background: var(--assistant-bg);
+    position: relative;
+    box-shadow: 0 4px 12px var(--ombre);
+  }
+
+  &.user .p-3 {
     background: var(--sellier);
     color: white;
   }
-  &.user .p-3 {
-    background: var(--or);
-    color: var(--sellier);
-    margin-left: auto;
-  }
 }
 
-.input-group {
-  background: white;
-  border-radius: 70px;
+.chat-input-wrapper {
+  position: sticky;
+  bottom: 0;
+  padding: 0.75rem 0 1.5rem;
+  background: linear-gradient(to top, var(--bg) 70%, transparent);
+}
+
+.chat-input-group {
+  display: flex;
+  align-items: center;
+  background: var(--input-bg);
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02);
+  max-width: 850px;
+  margin: 0 auto;
+  min-height: 52px;
+  padding: 0 12px 0 16px;
+}
+
+.chat-input-group .input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.chat-input-group > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.chat-input-group .form-control {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px 0;
+  margin: 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+  box-shadow: none;
+  resize: none;
   overflow: hidden;
-  box-shadow: 0 30px 80px var(--ombre);
-  .form-control {
-    border: none;
-    padding: 1.8rem 3rem;
-    font-size: 1.3rem;
-    background: var(--light);
-    box-shadow: inset 0 6px 20px rgba(0,0,0,0.08);
-  }
-  .form-control::placeholder {
-    color: var(--sellier);
-    opacity: 0.7;
-    font-style: italic;
-    font-weight: 500;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--or), var(--sellier));
-    border: none;
-    padding: 0 5rem;
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    transition: all 0.5s ease;
-    box-shadow: 0 15px 40px rgba(201, 168, 124, 0.5);
-    &:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 30px 60px rgba(201, 168, 124, 0.7);
-    }
-  }
 }
 
-// Responsive luxe
+.chat-input-group .form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.chat-input-group .form-control::placeholder {
+  color: #8e8ea0;
+}
+
+.btn-send {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.btn-send:hover {
+  background: #e5e7eb;
+}
+
+.btn-send:active {
+  transform: scale(0.96);
+}
+
+.btn-send svg {
+  width: 18px;
+  height: 18px;
+  stroke: #6e6e80;
+  stroke-width: 1.8;
+  fill: none;
+}
+
 @media (max-width: 768px) {
-  .chat-title { font-size: 3.8rem; }
-  .message .p-3 { max-width: 88%; }
-  .input-group .btn-primary { padding: 0 3rem; }
+  .chat-container {
+    padding: 1.5rem 0.75rem 0;
+  }
+
+  .chat-title {
+    font-size: 3.2rem;
+  }
+
+  #messages {
+    padding-bottom: 1.5rem;
+  }
+
+  .chat-input-group {
+    max-width: 100%;
+  }
 }
