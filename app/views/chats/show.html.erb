@@ -13,15 +13,18 @@
   <div id="messages"
        class="chat-messages flex-grow-1 px-3 py-3"
        data-controller="autoscroll">
+
     <%= render partial: "messages/message", collection: @messages %>
+
   </div>
 
   <!-- INPUT AREA -->
   <div class="chat-input px-3 py-2">
     <%= simple_form_for [@chat, @message],
           url: chat_messages_path(@chat),
-          data: { turbo: true },
-          html: { id: "new_message", class: "d-flex align-items-center w-100" } do |f| %>
+          remote: true,
+          data: { turbo: "true", turbo_stream: "true" },
+          html: { id: "new_message", class: "d-flex align-items-center w-100", data: { turbo: "true" } } do |f| %>
 
       <%= f.input :content,
             label: false,
