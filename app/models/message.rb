@@ -4,7 +4,7 @@ class Message < ApplicationRecord
 
   validates :content, presence: true
 
-  enum role: { user: "user", assistant: "assistant" }
+
 
   # Turbo Stream broadcast pour append en live
   after_create_commit -> { broadcast_append_to chat, target: "messages", partial: "messages/message", locals: { message: self } }

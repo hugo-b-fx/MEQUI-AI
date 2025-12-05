@@ -4,7 +4,7 @@ class ChatsController < ApplicationController
   def show
     @chat = current_user.chat || create_chat_with_welcome
     @message = Message.new
-    @messages = @chat.messages.order(:created_at).last(15)
+    @messages = @chat.messages.order(:created_at)
   end
 
   private

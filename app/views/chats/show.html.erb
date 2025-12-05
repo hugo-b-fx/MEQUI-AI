@@ -1,16 +1,38 @@
-<div class="chat-container">
-  <h1 class="chat-title">MequiBot IA 🐎</h1>
+<div class="chat-container d-flex flex-column">
 
-  <div id="messages" data-controller="chat">
-    <%= render @chat.messages %>
+  <!-- HEADER -->
+  <div class="chat-header d-flex align-items-center px-3 py-2">
+    <div class="avatar-ai me-2">🐎</div>
+    <div>
+      <strong>MequiBot IA</strong><br>
+      <small class="text-success">En ligne</small>
+    </div>
   </div>
 
-  <%= simple_form_for [@chat, @message], url: chat_messages_path(@chat), data: { turbo_stream: true } do |f| %>
-    <div class="input-group">
-      <%= f.input :content, label: false, placeholder: "Posez votre question avec élégance...", input_html: { class: "form-control", data: { action: "keydown->chat#sendOnEnter" } } %>
-      <%= f.submit "Envoyer", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-</div>
+  <!-- MESSAGES -->
+  <div id="messages"
+       class="chat-messages flex-grow-1 px-3 py-3"
+       data-controller="autoscroll">
+    <%= render partial: "messages/message", collection: @messages %>
+  </div>
 
-<%= turbo_stream_from @chat %>
+  <!-- INPUT AREA -->
+  <div class="chat-input px-3 py-2">
+    <%= simple_form_for [@chat, @message],
+          url: chat_messages_path(@chat),
+          data: { turbo: true },
+          html: { id: "new_message", class: "d-flex align-items-center w-100" } do |f| %>
+
+      <%= f.input :content,
+            label: false,
+            placeholder: "Pose ta question…",
+            input_html: { class: "message-field flex-grow-1" } %>
+
+      <button type="submit" class="send-btn ms-2">
+        ➤
+      </button>
+
+    <% end %>
+  </div>
+
+</div>
