@@ -13,6 +13,18 @@ class MessagesController < ApplicationController
       #user: current_user
     )
 
+    coaches = User.where(role: "coach")
+    coaches_context = coaches.map do |c|
+      <<~STR
+        - Nom: #{c.name}
+        Spécialités: #{c.specialities}
+        Niveau: #{c.level}
+        Bio: #{c.bio}
+        Location: #{c.location}
+        Prix: #{c.price_per_hour}
+      STR
+    end.join("\n")
+
     messages_for_llm = @chat.messages.order(:created_at).last(10)
 
     system_prompt = <<~PROMPT
@@ -20,6 +32,12 @@ class MessagesController < ApplicationController
       Tu es chaleureux, tu tutoies, tu utilises des emojis.
       Pose des questions intelligentes pour affiner le matching coach.
       Réponds toujours en français.
+      Voici la liste des coachs disponibles dans la base :
+      #{coaches_context}
+      Utilise exclusivement cette liste pour faire tes recommandations.
+      Si un coach ne correspond pas, explique pourquoi.
+      N'invente jamais de coachs.
+      Pose des questions pertinentes pour affiner le choix.
     PROMPT
 
     conversation_text = messages_for_llm.map do |m|
