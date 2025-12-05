@@ -5,14 +5,26 @@
     <%= render @chat.messages %>
   </div>
 
-  div>
+  <div class="chat-input-wrapper">
+    <%= simple_form_for [@chat, @message], url: chat_messages_path(@chat), data: { turbo_stream: true } do |f| %>
+      <div class="chat-input-group">
+        <%= f.input :content,
+                    label: false,
+                    placeholder: "Posez votre question avec élégance...",
+                    input_html: {
+                      class: "form-control",
+                      data: { action: "keydown->chat#sendOnEnter" },
+                      rows: 1
+                    } %>
 
-  <%= simple_form_for [@chat, @message], url: chat_messages_path(@chat), data: { turbo_stream: true } do |f| %>
-    <div class="input-group">
-      <%= f.input :content, label: false, placeholder: "Posez votre question avec élégance...", input_html: { class: "form-control", data: { action: "keydown->chat#sendOnEnter" } } %>
-      <%= f.submit "Envoyer", class: "btn btn-primary" %>
-    </div>
-  <% end %>
+        <%= button_tag type: 'submit', class: "btn btn-send" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <%= turbo_stream_from @chat %>
