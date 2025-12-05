@@ -8,7 +8,6 @@
   <template>
     <%= simple_form_for [@chat, Message.new],
         url: chat_messages_path(@chat),
-        data: { turbo_stream: true },
         html: { id: "new_message", class: "d-flex align-items-center w-100" } do |f| %>
 
       <%= f.input :content,
