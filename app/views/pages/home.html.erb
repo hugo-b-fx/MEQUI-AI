@@ -1,21 +1,54 @@
 <div class="home-hero">
   <div class="container text-center py-5 home-hero-content">
     <h1 class="home-hero-title">
-      Find the best coach for your horse 🐎
+      Ride with the right coach 🐎
     </h1>
 
     <p class="home-hero-subtitle">
-      The best coaches for the best riders.
-      Answer a few questions and let our AI match you with the perfect coach.
+      Our AI instantly connects you with the best equestrian coaches for your level, discipline and ambitions.
     </p>
 
     <div class="home-hero-actions mt-4">
       <% if user_signed_in? %>
-        <%= link_to "Go to Dashboard", "#", class: "btn btn-primary btn-lg" %>
+        <%# Remplace "#" par la vraie route de ton AI Chat si tu l'as %>
+        <%= link_to "Go to AI Chat", "#", class: "btn btn-ai btn-lg" %>
       <% else %>
-        <%= link_to "Get started – it's free", new_user_registration_path, class: "btn btn-primary btn-lg" %>
-        <%= link_to "Log in", new_user_session_path, class: "btn btn-ghost" %>
+        <%= link_to "Get started – it's free", new_user_registration_path, class: "btn btn-cta" %>
       <% end %>
     </div>
+
+    <!-- 🔻 SECTION IMAGES + BIO : UNE DE CHAQUE CÔTÉ -->
+    <div class="row justify-content-center mt-5">
+      <div class="col-12 col-md-5 mb-4">
+        <div class="card horse-card text-center">
+          <%= image_tag "cso.jpg",
+                alt: "Show jumping rider",
+                class: "card-img-top horse-img" %>
+          <div class="card-body">
+            <h5 class="card-title">CSO</h5>
+            <p class="card-text">
+              Find top CSO coaches to help you progress on technical tracks,
+              build confidence on course and prepare for competition.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-5 mb-4">
+        <div class="card horse-card text-center">
+          <%= image_tag "dressage.jpg",
+                alt: "Dressage rider",
+                class: "card-img-top horse-img" %>
+          <div class="card-body">
+            <h5 class="card-title">DRESSAGE</h5>
+            <p class="card-text">
+              Work with dressage specialists to improve harmony, precision
+              and expression with your horse, from amateur to pro level.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 🔺 FIN SECTION IMAGES -->
   </div>
 </div>
