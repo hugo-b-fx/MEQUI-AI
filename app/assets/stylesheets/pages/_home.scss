@@ -1,1 +1,87 @@
 // Specific CSS for your home-page
+/* Conteneur des deux photos */
+.home-images {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;                 // espace entre les deux
+  flex-wrap: nowrap;         // côte à côte sur grand écran
+  max-width: 900px;          // largeur max du bloc
+  margin: 3rem auto 0;       // centré sous le texte
+}
+
+/* Carte autour de chaque photo */
+.home-image-card {
+  flex: 1 1 0;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 0.8rem 0.8rem 1.1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Taille des images = on les RÉDUIT ici */
+.home-image {
+  width: 100%;              // prend la largeur de la carte
+  height: 230px;            // tu peux jouer sur ce chiffre (200, 250…)
+  object-fit: cover;        // recadre proprement
+  border-radius: 12px;
+  margin-bottom: 0.6rem;
+}
+
+.home-image-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #5f4b32;
+  text-align: center;
+}
+
+/* Mobile : les deux photos l'une sous l'autre pour éviter que ce soit trop serré */
+@media (max-width: 768px) {
+  .home-images {
+    flex-wrap: wrap;        // sur petit écran, elles repassent l'une sous l'autre
+  }
+
+  .home-image-card {
+    max-width: 100%;
+  }
+}
+
+/* Bouton principal CTA */
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  padding: 0.85rem 1.9rem;
+  border-radius: 999px;
+
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+
+  background: linear-gradient(135deg, #b6793d, #8b5a2b);
+  border: none;
+  color: #ffffff;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-cta:hover {
+  background: linear-gradient(135deg, #c98746, #9a6531);
+  color: #ffffff;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+}
+
+.btn-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* pour éviter que Bootstrap remette des bordures moches */
+.btn-cta:focus {
+  box-shadow: 0 0 0 0.15rem rgba(182, 121, 61, 0.4);
+}
